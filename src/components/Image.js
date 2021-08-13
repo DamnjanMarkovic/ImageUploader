@@ -78,13 +78,11 @@ export default function Image( props) {
             </div>
             <form autoComplete="off" noValidate onSubmit={handleFormSubmit}>
                 <div className="inputForm">
-                    <img src={values.imageSrc} className="card-image" />
-                    
-                    
+
+                    <img src={values.imageSrc} className="card-image inputFormImage" />
                         
                         <div className="form-group">
-                            
-                            <input type="file" accept="image/*" className={"form-control-fileName" + applyErrorClass('imageSrc')}
+                            <input type="file" accept="image/*" id="inputImageForm" className={"form-input-fileName" + applyErrorClass('imageSrc')}
                                 onChange={showPreview}  />
                         </div>
                         

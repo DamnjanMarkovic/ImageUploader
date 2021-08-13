@@ -3,22 +3,18 @@ import { Link } from "react-router-dom"
 const About = () => {
     return (
         <div>
-            <br/>
-            <br/>
-            <Link to="/">Go Back</Link>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <h4>Image uploader react app</h4>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <h4>Version 1.0.0</h4>
-            <br/>
+
+            <div className='header-left' style={{padding:10, margin:20}}>
+                <div className="header-left-link">
+                    <Link to="/" className="aboutPageLink">Go Back
+                    </Link>
+                </div>
+            </div>
+
+            <h4 style={{alignContent:"space-around", position:"absolute", fontSize:80, padding:10, marginTop:120}}>
+                Image uploader react app description page
+            </h4>
+
 
         </div>
     )

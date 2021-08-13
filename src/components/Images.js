@@ -89,13 +89,18 @@ export default function Images() {
 
     const imageCard = data => (
         <div className="card" onClick={() => { showRecordDetails(data) }}>
+            
             <img src={data.imageSrc} className="card-img-top rounded-circle" />
+            
             <div className="card-body">
+                
                 <h1 className="imageName">{(data.imageName).substring(0, (data.imageName).length-4)}</h1>
+                
                 <button className="btn btn-light delete-button" onClick={e => onDelete(e, parseInt(data.id))}>
                     <i className="far fa-trash-alt"></i>
                 </button>
             </div>
+
         </div>
     )
 
@@ -133,9 +138,6 @@ export default function Images() {
                             )
                         }
                         </div>
-
-
-
                     </tbody>
                 </table>
                 </div>

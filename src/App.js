@@ -16,7 +16,7 @@ function App() {
         
         <Route path='/' exact render={(props) => (
             <>                        
-                    <Images />
+               <Images />
             </>
           )} />
         
