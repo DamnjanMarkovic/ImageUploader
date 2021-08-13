@@ -21,9 +21,9 @@ export default function Images() {
     const imagesAPI = (url = 'https://localhost:44397/api/Image/') => {
         return {
             fetchAll: () => axios.get(url),
-            create: newRecord => axios.post(url, newRecord, {
+            create: formData => axios.post(url, formData, {
                 headers: {
-                  "Content-Type": "multipart/form-data",
+                    'content-type': 'multipart/form-data',
                 },
                 onUploadProgress: data => {
                   setProgress(Math.round((100 * data.loaded) / data.total))
@@ -37,38 +37,25 @@ export default function Images() {
     function refreshImages() {
         imagesAPI().fetchAll()        
             .then(res => {
-                setImages(res.data)
-                console.log('ide u refresh')
+                setImages(res.data)                
             })
             .catch(err => console.log(err))
     }
 
     const addOrEdit = (formData, onSuccess) => {
 
+            imagesAPI().create(formData)
+                .then(res => {
+                    refreshImages();
+                    //onSuccess(); 
+                    if (res.data.includes("already exists!")) {
+                        alert(res.data); 
+                    }
+                    
+                })
+                .catch(err => console.log(err.value))
 
-            if (formData.get('id') == "0")
-                imagesAPI().create(formData)
-                    .then(res => {
-                        if (res.data != "Image already exists!") {
-                            refreshImages();
-                            onSuccess();                          
-                        }
-                        else {
-                            alert(res.data);
-                        }
-                        
-                    })
-                    .catch(err => console.log(err.value))
-            else
-                imagesAPI().update(formData.get('id'), formData)
-                    .then(res => {
-                        console.log("222");
-                        refreshImages();
-                        onSuccess();
 
-                    })
-                    .catch(err => console.log(err))
-        
 
     }
 
@@ -146,4 +133,6 @@ export default function Images() {
             
         </div>
     )
+
+                    
 }

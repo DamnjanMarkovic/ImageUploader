@@ -25,17 +25,18 @@ export default function Image( props) {
 
 
     const showPreview = e => {
+
         if (e.target.files && e.target.files[0]) {
-            let imageFile = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = x => {
-                setValues({
-                    ...values,
-                    imageFile,
-                    imageSrc: x.target.result
-                })
-            }
-            reader.readAsDataURL(imageFile)
+
+            let imageFile = Array.from(e.target.files)
+                const reader = new FileReader();
+                reader.onload = x => {
+                    setValues({ 
+                        ...values,
+                        imageFile,
+                        imageSrc: x.target.result})
+                }
+                reader.readAsDataURL(imageFile[0])
         }
         else {
             setValues({
@@ -50,7 +51,7 @@ export default function Image( props) {
         let temp = {}
         temp.imageSrc = values.imageSrc == defaultImageSrc ? false : true;
         setErrors(temp)
-        return Object.values(temp).every(x => x == true)
+        return Object.values(temp).every(x => x == true)        
     }
 
     const resetForm = () => {
@@ -60,12 +61,14 @@ export default function Image( props) {
     }
 
     const handleFormSubmit = e => {
+
         e.preventDefault()
         if (validate()) {
+
             const formData = new FormData()
-            formData.append('id', values.id)
-            formData.append('imageName', values.imageName)
-            formData.append('imageFile', values.imageFile)
+            values.imageFile.forEach(element => {
+                formData.append('iFormFiles', element)
+            });
             addOrEdit(formData, resetForm)
         }
     }
@@ -82,7 +85,8 @@ export default function Image( props) {
                     <img src={values.imageSrc} className="card-image inputFormImage" />
                         
                         <div className="form-group">
-                            <input type="file" accept="image/*" id="inputImageForm" className={"form-input-fileName" + applyErrorClass('imageSrc')}
+                            <input type="file" accept="image/*" id="inputImageForm" multiple="multiple"
+                            className={"form-input-fileName" + applyErrorClass('imageSrc')}
                                 onChange={showPreview}  />
                         </div>
                         
