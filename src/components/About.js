@@ -12,7 +12,8 @@ const About = () => {
             </div>
 
             <h4 style={{alignContent:"space-around", position:"absolute", fontSize:80, padding:10, marginTop:120}}>
-                Image uploader react app description page
+                Second Page Content
+
             </h4>
 
 

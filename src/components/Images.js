@@ -4,6 +4,8 @@ import Header from './Header'
 import axios from "axios";
 import { Container, Row, Col, Form, Button, ProgressBar } from "react-bootstrap"
 
+import PrintForm from './PrintForm';
+
 
 
 export default function Images() {
@@ -13,6 +15,9 @@ export default function Images() {
     const [imageExists, setimageExists] = useState(true);
     const [showAddImage, setShowAddImage] = useState(false)
     const [progress, setProgress] = useState()
+    const [printImage, setprintImage] = useState(null)
+    const [printAllImages, setprintAllImages] = useState(null)
+    const [showPrintForm, setshowPrintForm] = useState(false)
 
     useEffect(() => {
         refreshImages();
@@ -54,9 +59,6 @@ export default function Images() {
                     
                 })
                 .catch(err => console.log(err.value))
-
-
-
     }
 
 
@@ -74,28 +76,40 @@ export default function Images() {
 
 
 
+    const print = (e, image) => {
+        e.stopPropagation();
+        setprintImage(image);
+        setshowPrintForm(!showPrintForm);
+    }
+
+
+
     const imageCard = data => (
-        <div className="card" onClick={() => { showRecordDetails(data) }}>
-            
-            <img src={data.imageSrc} className="card-img-top rounded-circle" />
+        <>
+        <div className="card cardContainer" onClick={() => { showRecordDetails(data) }}>
+            <div className="btn-print-container">
+                <button className="btn print-button" onClick={e => print(e, data) }>
+                    <i className="fas fa-print fa-2x printSign" ></i>
+                </button>
+            </div>
+            <img src={data.imageSrc} className="card-img-top rounded-circle card-image" />
             
             <div className="card-body">
-                
+
                 <h1 className="imageName">{(data.imageName).substring(0, (data.imageName).length-4)}</h1>
                 
                 <button className="btn btn-light delete-button" onClick={e => onDelete(e, parseInt(data.id))}>
                     <i className="far fa-trash-alt"></i>
                 </button>
             </div>
-
         </div>
+        </>
     )
 
 
     return (
         <div className="row">
             <Header onAdd={() => setShowAddImage(!showAddImage)} showAdd = {showAddImage} className="header" />
-
             <div >
                 <div >
                 {showAddImage &&  
@@ -104,13 +118,16 @@ export default function Images() {
                     recordForEdit={recordForEdit}
                 />}
                 </div>
-                <div visuallyHidden='true'>
+                <div visuallyhidden='true'>
                     {progress && progress < '100' && <ProgressBar  animated='true' now={progress} label={`${progress}%`}  />}
                 </div>
                 <div className="col-md-8">
                     
                 <table>
                     <tbody>
+                        <div className="printFormInfo">
+                            {showPrintForm && <PrintForm printImage={printImage} images={images}  />}
+                        </div>
                         <div>
                         {
                             [...Array(Math.ceil(images.length / 6))].map((e, i) =>
@@ -122,9 +139,11 @@ export default function Images() {
                                     <td>{images[6 * i + 4] ? imageCard(images[6 * i + 4]) : null}</td>
                                     <td>{images[6 * i + 5] ? imageCard(images[6 * i + 5]) : null}</td>
                                 </tr>
+                                
                             )
                         }
                         </div>
+
                     </tbody>
                 </table>
                 </div>
