@@ -112,8 +112,8 @@ export default function PrintForm(props) {
             resultPaperWidthEntered: paperWidthValueInserted
         })
 
-        let totalWidth11 = Math.round(imageSpecialValues.allImagesPrintingPaperWidth* 25.4 / 250 *100) / 100;
-        let totalHeight11 = Math.round(imageSpecialValues.allImagesPrintingPaperHeight * 25.4 / 250 *100) / 100;
+        let totalWidth11 = Math.round(imageSpecialValues.allImagesPrintingPaperWidth* 25.4 / parseFloat(dpiValueInserted) *100) / 100;
+        let totalHeight11 = Math.round(imageSpecialValues.allImagesPrintingPaperHeight * 25.4 / parseFloat(dpiValueInserted) *100) / 100;
         
         let paperNeededRectangleArea = Math.round((totalHeight11 * totalWidth11)/paperWidthValueInserted*100) / 100;
 
