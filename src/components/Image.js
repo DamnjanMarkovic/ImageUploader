@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const defaultImageSrc = '/select-image.jpg'
+const defaultImageSrc = '/imageDefault.jpg'
 
 const initialFieldValues = {
     id: 0,

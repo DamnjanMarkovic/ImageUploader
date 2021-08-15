@@ -13,19 +13,32 @@ const initialSpecialImageValues = {
     allImagesPrintingPaperHeight:0    
 }
 
+const finalPrintingValuesProps = {
+
+    allImagesfinalPrintingValuesWidth:0,
+    allImagesfinalPrintingValuesHeight:0,    
+    dpiValueSet:0
+}
+
 
 
 export default function PrintForm(props) {   
 
     const [imageValues, setimageValues] = useState(initialImageValues)
     const [imageSpecialValues, setimageSpecialValues] = useState(initialSpecialImageValues)
+
+    const [dpiValueInserted, setdpiValueInserted] = useState(0);
+    const [paperWidthValueInserted, setpaperWidthValueInserted] = useState(0);
+    const [finalResult, setfinalResult] = useState(0);
+    
+
     const imgElement = React.useRef(null);
 
 
     
     useEffect(() => {
         setComplexValues();
-    }, [setimageSpecialValues])
+    }, [setimageSpecialValues] )
 
 
 
@@ -53,6 +66,7 @@ export default function PrintForm(props) {
                         allImagesPrintingPaperWidth: widthS, 
                         allImagesPrintingPaperHeight: heightS
                     })
+
             })
 
         }
@@ -89,6 +103,26 @@ export default function PrintForm(props) {
         })
     }
 
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        setdpiValueInserted({
+            resultdpiEntered: dpiValueInserted,
+        })
+        setpaperWidthValueInserted({
+            resultPaperWidthEntered: paperWidthValueInserted
+        })
+
+        let totalWidth11 = Math.round(imageSpecialValues.allImagesPrintingPaperWidth* 25.4 / 250 *100) / 100;
+        let totalHeight11 = Math.round(imageSpecialValues.allImagesPrintingPaperHeight * 25.4 / 250 *100) / 100;
+        
+        let paperNeededRectangleArea = Math.round((totalHeight11 * totalWidth11)/paperWidthValueInserted*100) / 100;
+
+        setfinalResult({
+            finalfinalresult: paperNeededRectangleArea
+        })
+
+    }
+
 
     return (
         <div className="printFormContainer">
@@ -106,12 +140,39 @@ export default function PrintForm(props) {
             
             <div className="printDescriptionContainer">
                 <div>
-                <h1 className="printFormImageInfo">{`Printing this image would require paper of the size`}</h1>
-                <h1 className="printFormImageInfo">{`${imageValues.neededPaperWidth} mm X ${imageValues.neededPaperHeight} mm`}</h1>
-                <br/>
-                <h1 className="printFormImageInfo">{`Printing all images would require paper of the size`}</h1>
-                <h1 className="printFormImageInfo">{`${imageSpecialValues.allImagesPrintingPaperWidth} mm X ${imageSpecialValues.allImagesPrintingPaperHeight} mm`}</h1>
+                    <h1 className="printFormImageInfo">{`Printing this image would require paper of the size`}</h1>
+                    <h1 className="printFormImageInfo">{`${imageValues.neededPaperWidth} mm X ${imageValues.neededPaperHeight} mm`}</h1>
+                    <br/>
+                    <h1 className="printFormImageInfo">{`Printing all images would require paper of the size`}</h1>
+                    <h1 className="printFormImageInfo">{`${imageSpecialValues.allImagesPrintingPaperWidth} mm X ${imageSpecialValues.allImagesPrintingPaperHeight} mm`}</h1>
+                    <h1 className="printFormImageInfo">{`With the dpi od ${dpiValueInserted.resultdpiEntered} and printing paper width of 
+                    ${paperWidthValueInserted.resultPaperWidthEntered}mm, it would take ${finalResult.finalfinalresult} mm long paper to print all the images`}</h1>
+
+
+
                 </div>
+            </div>
+
+
+
+
+            <div className="input-dpi-form">
+                <form onSubmit={handleSubmit}>
+                    <label >Input dpi:<input 
+                        type="text"
+                        value={dpiValueInserted}
+                        onChange={e => setdpiValueInserted(e.target.value)}
+                        />
+                    </label>
+                    <label>Input papir width(in mm):<input
+                        type="text"
+                        value={paperWidthValueInserted}
+                        onChange={e => setpaperWidthValueInserted(e.target.value)}
+                        />
+                    </label>
+
+                <input type="submit" value="Submit" />
+                </form>
             </div>
         
         </div>

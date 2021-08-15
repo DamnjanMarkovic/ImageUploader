@@ -227,7 +227,7 @@ float: left;
 
 .printFormImageInfo {
   max-height: 150px;
-  font-size: 22px;
+  font-size: 14px;
 
   overflow:hidden;
   text-align: center;
@@ -244,7 +244,20 @@ float: left;
   font-size: 1.9rem;
 }
 
+.label-results {
+  width: 100px;
+  height: 50px;
 
+}
+
+.input-dpi-form {
+  display:block;
+  box-sizing: border-box;
+  
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 1px black;
+}
 
 
 
